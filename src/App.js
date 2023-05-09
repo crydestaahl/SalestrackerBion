@@ -141,8 +141,8 @@ function App() {
   return (
     <div className='App'>
       <header className='App-header'>
+        <img src={logo} alt='Krall' className='logo' />
         <div className='eventFeed'>
-          <img src={logo} alt='Krall' className='logo' />
           {loading ? <p className='loading'>Laddar data</p> : <p></p>}
           {!loading  ? (
             data.map((item, index) => (
@@ -162,6 +162,7 @@ function App() {
                         .filter(ticket => ticket.type === 0 || ticket.type === 5)
                         .reduce((sum, ticket) => sum + ticket.pIncVatHi * ticket.soldQtyNet, 0)} kr
                       </h3>
+                      <h4>{item.sales.soldQtyNet + ' av ' + item.sales.totCapacity + ' biljetter sålda.'} </h4>
                     <button onClick={() => toggleInfoFunction(item.erc)}>{notToggled ? 'Mindre info' : 'Mer info'}</button>
 
                     <div 
@@ -240,12 +241,12 @@ function App() {
           ) : (
             <p className='error'>Nyckeln tillhör inte Folkets hus och parker</p>
           )}
-          <button className='refresh' onClick={refresh}>
-            Ladda om sidan
-          </button>
-        </div>
-
-        <div className='keyInput'>
+          </div>
+          
+          <div className='keyInput'>
+            <button className='refresh' onClick={refresh}>
+              Ladda om sidan
+            </button>
           <p className='currentKey'>Ladda data från en annan nyckel:</p>
           <input
             type='text'
