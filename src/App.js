@@ -162,7 +162,7 @@ function App() {
                         .filter(ticket => ticket.type === 0 || ticket.type === 5)
                         .reduce((sum, ticket) => sum + ticket.pIncVatHi * ticket.soldQtyNet, 0)} kr
                       </h3>
-                    <button onClick={() => toggleInfoFunction(item.erc)}>Mer info</button>
+                    <button onClick={() => toggleInfoFunction(item.erc)}>{notToggled ? 'Mindre info' : 'Mer info'}</button>
 
                     <div 
                     className="ticketInfo"
