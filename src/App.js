@@ -193,8 +193,7 @@ function App() {
                         ticket.name === 'Show inkl. veg. balkonglåda' || 
                         ticket.name === 'Show inkl. balkonglåda' || 
                         ticket.name === "Show inkl. 2-rätters i bistron" || 
-                        ticket.name === "Rullstol inkl. 2-rättersmeny" || 
-                        ticket.name === "2-rättersmeny i bistron"  
+                        ticket.name === "Rullstol inkl. 2-rättersmeny" 
                         )              
                       .map(ticket => ( // map over the filtered tickets
                        <div className='ticketInfo'>
