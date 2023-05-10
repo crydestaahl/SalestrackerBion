@@ -12,27 +12,6 @@ function App() {
   const [activeIndex, setActiveIndex] = useState(null); // state variable to store the active index
   const [notToggled, setNotToggled] = useState(false); // state variable
 
-
-  useEffect(() => {
-    const fetchData = () => {
-      localStorage.clear();
-      setLoading(true);
-      fetch(
-        `https://proxyserversalestracker.onrender.com/https://manager.tickster.com/Statistics/SalesTracker/Api.ashx?keys=${apiKey.trim()}`
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-          setData(data);
-          // Spara data i local storage -
-          localStorage.setItem('cachedData', JSON.stringify(data));
-          setLoading(false);
-        }) 
-        .catch((error) => console.error(error));
-    };
-    fetchData();
-  }, [apiKey]);
-
   const handleFocus = () => {
     setInputData('');
   };
@@ -62,6 +41,34 @@ function App() {
     }
   };
 
+  function formatTime(timeStr) {
+    const date = new Date(timeStr);
+    const isoString = date.toISOString();
+    const formattedDate = isoString.substring(0, 10);
+    const formattedTime = isoString.substring(11, 16);
+    return formattedDate + ' ' + formattedTime;
+  }
+
+  useEffect(() => {
+    const fetchData = () => {
+      localStorage.clear();
+      setLoading(true);
+      fetch(
+        `https://proxyserversalestracker.onrender.com/https://manager.tickster.com/Statistics/SalesTracker/Api.ashx?keys=${apiKey.trim()}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          setData(data);
+          // Spara data i local storage -
+          localStorage.setItem('cachedData', JSON.stringify(data));
+          setLoading(false);
+        }) 
+        .catch((error) => console.error(error));
+    };
+    fetchData();
+  }, [apiKey]);
+
   const saveInput = () => {
     setData('');
 
@@ -88,14 +95,6 @@ function App() {
       window.location.reload();
     }
   };
-
-  function formatTime(timeStr) {
-    const date = new Date(timeStr);
-    const isoString = date.toISOString();
-    const formattedDate = isoString.substring(0, 10);
-    const formattedTime = isoString.substring(11, 16);
-    return formattedDate + ' ' + formattedTime;
-  }
 
   if (!data) {
     return (
@@ -135,9 +134,6 @@ function App() {
     );
   }
   
-
-               
-
   return (
     <div className='App'>
       <header className='App-header'>
@@ -156,6 +152,7 @@ function App() {
                 >
                   <div className='eventInfo' key={item.erc}>  
                     <h3 className='eventName'>{item.name}</h3>
+                    <h4>Salong: {(item.ven.name)}</h4>
                     <h4>Start: {formatTime(item.startLocal)}</h4>
                     <h3 className='totalSales'>Total försäljning: {' '} 
                       {item.sales.salesAmtNet + item.gfs
